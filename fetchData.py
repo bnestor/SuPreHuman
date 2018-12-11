@@ -3,9 +3,9 @@ fetchData.py
 
 collect reddit data according to api rules
 """
-import numpy as np
-import pandas as pd
-import h5py
+#import numpy as np
+#import pandas as pd
+#import h5py
 import os
 import praw
 
@@ -38,8 +38,8 @@ def main():
 
     subreddit = reddit.subreddit('SuicideWatch')
     conversedict={}
-    hot_python=subreddit.hot(limit=100)
-    df=pd.DataFrame(columns=['Content', 'Parent'])
+    hot_python=subreddit.hot(limit=1000)
+    # df=pd.DataFrame(columns=['Content', 'Parent'])
 
 
     with open("output.txt", 'wb') as f:
@@ -52,7 +52,7 @@ def main():
                 f.write('subid: {}, Title: {}, author:{}, ups: {}, downs: {}, Have we visited?: {}'.format(submission.id, submission.title,submission.author, submission.ups,submission.downs,submission.visited).encode())
                 # f.write("\n".encode())
                 f.write(' created:{}, distinguished:{}, edited:{},num_comments:{}, score:{}, upvote_ratio:{}\r\n'.format(submission.created_utc, submission.distinguished, submission.edited, submission.num_comments, submission.score, submission.upvote_ratio).encode())
-                f.write('OPbody:{}\r\n'.format(submission.selftext).encode())
+                f.write('OPbody:{}\r\n'.format(submission.selftext.replace('\n',"").replace('\r',"").replace('&#x200B',"")).encode())
                 # f.write("\n".encode())
                 # author, clicked, comments, created_utc, distinguished, edited, id, is_video,
                 # print(dir(submission))
